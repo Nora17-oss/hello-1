@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key><string>DesktopOrganizer</string>
+    <key>CFBundleIdentifier</key><string>local.desktoporganizer.app</string>
+    <key>CFBundleName</key><string>DesktopOrganizer</string>
+    <key>CFBundleDisplayName</key><string>桌面归纳器</string>
+    <key>CFBundleIconFile</key><string>AppIcon</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleShortVersionString</key><string>1.5.0</string>
+    <key>CFBundleVersion</key><string>22</string>
+    <key>LSMinimumSystemVersion</key><string>15.0</string>
+    <key>LSUIElement</key><true/>
+    <key>NSHighResolutionCapable</key><true/>
+    <key>NSDesktopFolderUsageDescription</key><string>展示桌面文件，并在你确认投递后将选中项移入项目目录。</string>
+    <key>NSDocumentsFolderUsageDescription</key><string>读取你授权的项目列表，并保存你确认投递的文件。</string>
+    <key>NSDownloadsFolderUsageDescription</key><string>仅在你主动授权该目录时访问其中的项目。</string>
+</dict>
+</plist>

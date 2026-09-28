@@ -1,0 +1,11 @@
+.build/
+dist/
+.DS_Store
+*.xcuserstate
+*.store
+*.store-shm
+*.store-wal
+AppData/
+.swiftpm/
+.codex/
+.agents/
