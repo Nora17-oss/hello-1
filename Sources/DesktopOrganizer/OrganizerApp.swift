@@ -8,8 +8,16 @@ import ProbeCore
 
 final class OrganizerPanel: NSPanel {
     var category: BoardCategory?
+    var onInteraction: (() -> Void)?
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { false }
+
+    override func sendEvent(_ event: NSEvent) {
+        if event.type == .leftMouseDown || event.type == .rightMouseDown {
+            onInteraction?()
+        }
+        super.sendEvent(event)
+    }
 }
 final class InteractiveHostingView<Content: View>: NSHostingView<Content> {
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
@@ -292,6 +300,10 @@ final class OrganizerDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             let board = OrganizerPanel(contentRect: defaultFrame(index: active.firstIndex(of: category) ?? 0, count: active.count),
                 styleMask: [.titled, .resizable, .nonactivatingPanel, .fullSizeContentView], backing: .buffered, defer: false)
             board.category = category; board.title = model.boardTitle(category)
+            board.onInteraction = { [weak self, weak board] in
+                guard let self, let board else { return }
+                self.promoteBoard(board)
+            }
             board.titleVisibility = .hidden; board.titlebarAppearsTransparent = true
             board.isReleasedWhenClosed = false; board.hidesOnDeactivate = false; board.isFloatingPanel = false
             board.isOpaque = false; board.backgroundColor = .clear; board.hasShadow = true
@@ -328,6 +340,12 @@ final class OrganizerDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             }
         }
         statusItem.button?.toolTip = "桌面 \(model.items.count) 项 · \(model.dueCount) 项可归档"
+    }
+    /// Bring the interacted board above ordinary app windows without making it permanently always-on-top.
+    func promoteBoard(_ board: OrganizerPanel) {
+        board.level = .normal
+        board.orderFrontRegardless()
+        board.makeKey()
     }
     func toggleBoardCollapse(_ category: BoardCategory) {
         guard let board = boards[category] else { return }
